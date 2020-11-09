@@ -5,6 +5,6 @@ output "instance_ip_addresses" {
 output "SSH" {
   value = {
     for instance in aws_instance.ansible_frontend :
-    instance.id => "ssh -i aws_key/Ansible_workshop_key.pem ec2-user@${instance.public_ip}"
+    instance.id => "ssh -i aws_key/workshop_key.pem ec2-user@${instance.public_ip}"
   }
 }
