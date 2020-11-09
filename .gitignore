@@ -3,7 +3,7 @@
 
 ##ssh_keys##
 
-**id_rsa*
+#**id_rsa*
 
 ### Ansible ###
 *.retry
