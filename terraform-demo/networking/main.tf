@@ -1,11 +1,10 @@
 locals {
   tags = {
-    Technology       = var.technology,
-    Proyect          = var.proyect,
-    Area             = var.area,
-    Environment      = local.environment,
-    SolutionDesigner = var.solution_designer,
-    Responsable      = var.responsable
+    Technology  = var.technology,
+    Proyect     = var.proyect,
+    Area        = var.area,
+    Environment = var.environment,
+    Responsable = var.responsable
   }
 }
 
@@ -13,7 +12,7 @@ module "vpc" {
   # REQUIRED
   source      = "../terraform_modules/networking/vpc"
   prefix      = var.prefix
-  environment = local.environment
+  environment = var.environment
   proyect     = var.proyect
   tags        = merge(local.tags, var.tags_vpc)
 
@@ -30,7 +29,7 @@ module "subnets" {
   source = "../terraform_modules/networking/subnets"
 
   prefix      = var.prefix
-  environment = local.environment
+  environment = var.environment
   proyect     = var.proyect
   application = var.application_subnet
   tags        = merge(local.tags, var.tags_subnets)

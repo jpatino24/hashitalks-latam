@@ -16,7 +16,3 @@ output "main_route_table_id" {
 output "main_vpc_tags" {
   value = aws_vpc.main_vpc.*.tags
 }
-
-output "main_vpc_peering_id" {
-  value = aws_vpc_peering_connection.peer.*.id
-}

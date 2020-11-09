@@ -2,8 +2,8 @@ locals {
   create_vpc                 = var.create_vpc == true ? 1 : 0
   create_default_network_acl = var.create_default_network_acl == true ? 1 : 0
   create_internet_gateway    = var.create_internet_gateway == true ? 1 : 0
-  create_vpc_peering         = var.create_vpc_peering == true ? 1 : 0
 }
+
 #Module      : VPC
 #Description : Terraform module to create VPC with degault network acl
 
