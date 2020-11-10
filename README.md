@@ -4,7 +4,7 @@
 
 cd  ./terraform-demo/networking
 terraform init
-terraform destroy -var-file="./module.tfvars"
+terraform apply -var-file="./module.tfvars"
 
 ### Frontend
 
