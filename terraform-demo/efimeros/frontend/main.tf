@@ -54,6 +54,16 @@ data "terraform_remote_state" "networking" {
   }
 }
 
+data "terraform_remote_state" "backend" {
+  backend = "local"
+
+  config = {
+    path = "../backend/terraform.tfstate"
+  }
+}
+
+# Create Instance
+
 resource "aws_instance" "ansible_frontend" {
   count                  = var.instance_number
   ami                    = var.ami_id

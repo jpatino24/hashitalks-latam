@@ -1,0 +1,19 @@
+[linux:vars]
+timeout=60
+ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+
+[linux:children]
+lb
+
+[lb]
+3.22.217.183
+
+[webservers:vars]
+timeout=60
+#ansible_ssh_common_args='-o ServerAliveInterval=20 -o ProxyCommand="ssh -i ../aws_key/workshop_key.pem -W %h:%p -q ec2-user@3.22.217.183"'
+ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+
+[webservers]
+#172.31.0.33
+#172.31.0.14
+3.137.210.208

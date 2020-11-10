@@ -1,0 +1,10 @@
+---
+# vars file for fronted
+
+so_pkg:
+ - haproxy
+ - vim
+ - screen
+ - bash-completion
+
+haproxy_srv: haproxy

@@ -1,0 +1,37 @@
+---
+# tasks file for frontend
+
+- name: Check sshd Timeout Option
+  shell: cat /etc/ssh/sshd_config | grep "ClientAliveInterval 60"
+  register: sshd_config
+  ignore_errors: True
+
+- name: "Set SSH Timeout Due Inactivity"
+  shell: 'echo "ClientAliveInterval 60" | sudo tee --append /etc/ssh/sshd_config'
+  notify: restart_sshd
+  when: sshd_config.rc != 0
+
+- name: "Update SO"
+  yum:
+    name: "*"
+    state: latest
+
+- name: Install Required Packages
+  yum:
+   name: "{{ item  }}"
+   state: latest
+  loop:
+   - "{{ so_pkg }}"
+
+- name: Start haproxy
+  service:
+   name: "{{ haproxy_srv }}"
+   enabled: true
+   state: started
+
+- name: Copy haproxy template
+  template:
+   src: haproxy.j2
+   dest: /etc/haproxy/haproxy.cfg
+  notify:
+   - restart_haproxy

@@ -1,0 +1,39 @@
+---
+# tasks file for Backend
+
+- name: Check ansible Install
+  shell:
+    cmd: rpm -qa | grep ansible
+  args:
+    warn: false
+  register: install_ansible
+  ignore_errors: yes
+
+- name: Install Required Packages
+  shell:
+    cmd: amazon-linux-extras install -y ansible2
+  when: install_ansible.rc != 0
+
+- name: "Deploy Ansible.cfg template"
+  template:
+    src: ansible.j2
+    dest: /home/ec2-user/ansible.cfg
+    owner: ec2-user
+    group: ec2-user
+    mode: '0640'
+
+- name: Copy Internal inventory
+  copy:
+    src: ../../backend/ansible/inventory
+    dest: /home/ec2-user/inventory
+    owner: ec2-user
+    group: ec2-user
+    mode: '0640'
+
+- name: "Copy SSH Key"
+  copy:
+    src: ../../backend/aws_key/backend_key.pem
+    dest: /home/ec2-user/.ssh/id_rsa
+    owner: ec2-user
+    group: ec2-user
+    mode: '0600'

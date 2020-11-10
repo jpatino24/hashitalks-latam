@@ -1,0 +1,12 @@
+# handlers file for frontend
+
+- name: restart_sshd
+  systemd:
+    name: sshd
+    state: restarted
+
+- name: restart_haproxy
+  service:
+   name: "{{ haproxy_srv }}"
+   enabled: true
+   state: restarted

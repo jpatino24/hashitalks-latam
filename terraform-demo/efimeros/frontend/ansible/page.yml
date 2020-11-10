@@ -1,0 +1,7 @@
+---
+- name: "Configure Site Instances"
+  hosts: webservers
+  become: True
+  gather_facts: False
+  roles:
+   - Page

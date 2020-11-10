@@ -1,0 +1,6 @@
+---
+# vars file for backend
+
+inventory_file: /home/ec2-user/inventory
+
+ssh_key_path: /home/ec2-user/.ssh/id_rsa

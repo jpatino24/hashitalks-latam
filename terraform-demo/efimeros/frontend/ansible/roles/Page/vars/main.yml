@@ -1,0 +1,5 @@
+# vars file for Backend
+
+httpd_packages:
+  - httpd
+  - mod_wsgi

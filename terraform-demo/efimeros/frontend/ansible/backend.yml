@@ -1,0 +1,7 @@
+---
+- name: "Configure Frontend to configire Backend Instances"
+  hosts: lb
+  become: True
+  gather_facts: False
+  roles:
+   - Backend
