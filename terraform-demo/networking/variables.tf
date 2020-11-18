@@ -106,3 +106,8 @@ variable "tags_subnets" {
   type        = map
   description = "TAGS de las SUBNETS a convenir con el cliente para organizar facturacion."
 }
+## TEMPLATE AMI
+variable "delete_snapshot" {
+  type        = bool
+  description = "Force Packer to delete snapshots associated with AMIs, which have been deregistered by force_deregister."
+}

@@ -19,7 +19,7 @@ resource "aws_security_group" "allow_backend" {
     cidr_blocks = [data.terraform_remote_state.networking.outputs.main_cidr_block[0]]
   }
 
-ingress {
+  ingress {
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"

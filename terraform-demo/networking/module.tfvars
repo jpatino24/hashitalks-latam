@@ -29,3 +29,8 @@ availability_zones_subnets = ["us-east-2a", "us-east-2b"] #Ver region
 tags_subnets = {
   BuildingBlock = "Networking"
 }
+
+##----------
+##AMI_PACKER
+##----------
+delete_snapshot = true

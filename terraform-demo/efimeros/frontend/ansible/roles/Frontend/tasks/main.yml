@@ -35,3 +35,4 @@
    dest: /etc/haproxy/haproxy.cfg
   notify:
    - restart_haproxy
+  tags: haproxy_template

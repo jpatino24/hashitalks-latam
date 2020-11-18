@@ -54,9 +54,20 @@ data "terraform_remote_state" "networking" {
   }
 }
 
+# Get packer image
+
+data "aws_ami_ids" "backend" {
+  owners = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["My apache*"]
+  }
+}
+
 resource "aws_instance" "ansible_backend" {
   count                  = var.instance_number
-  ami                    = var.ami_id
+  ami                    = data.aws_ami_ids.backend.ids[0]
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.allow_backend.id]
   subnet_id              = data.terraform_remote_state.networking.outputs.private_subnet_id[0]

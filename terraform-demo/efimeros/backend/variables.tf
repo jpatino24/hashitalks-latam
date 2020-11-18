@@ -6,9 +6,9 @@ variable "instance_number" {
   description = "Number of ec2 instances"
 }
 
-variable "ami_id" {
-  description = "ID of the AMI to provision."
-}
+#variable "ami_id" {
+#  description = "ID of the AMI to provision."
+#}
 
 variable "instance_type" {
   description = "type of EC2 instance to provision."

@@ -9,7 +9,7 @@ instance_number = "2"
 ## INSTANCE TYPE
 ##-------------
 
-ami_id        = "ami-03657b56516ab7912"
+#ami_id        = "ami-03657b56516ab7912"
 instance_type = "t2.micro"
 key_name      = "backend_keypair"
 
