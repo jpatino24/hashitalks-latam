@@ -1,13 +1,26 @@
 # hashitalks-latam
 
-### Networking
+## Arquitectura de despliegue
 
-cd  ./terraform-demo/networking
-terraform init
-terraform apply -var-file="./module.tfvars"
+![](./images/hashitalks_demo.png)
 
-### Frontend
+El diagrama anterior es un detalle de los componentes que se despliegan en la nube de con el código contenido en este repositorio y sirven como demostración para comprender el funcionamiento de un flujo completo de aprovisionamiento usando IaC, CaC e infraestructura inmutable.
 
-cd  ./terraform-demo/efimeros/frontend
-terraform init
-terraform apply -var-file="./project.tfvars"
+### Ejecución del Flujo de aprovisionamiento 
+
+```bash
+$ make create_pipeline
+```
+
+### Actualización Frontend
+
+```bash
+$ make update_frontend
+```
+
+### Destrucción del ambiente
+
+```bash
+$ make destroy_pipeline
+```
+
