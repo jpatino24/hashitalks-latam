@@ -21,7 +21,27 @@ resource "aws_key_pair" "generated_key" {
   }
 }
 
-# Create Keys
+# Get packer image
+
+data "aws_ami_ids" "backends" {
+  owners = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["My apache*"]
+  }
+}
+
+data "aws_ami" "backend" {
+  owners = ["self"]
+
+  filter {
+    name   = "name"
+    values = ["My apache*"]
+  }
+}
+
+# Rendered templates vars
 
 locals {
   rendered_key_pair_pub = templatefile("templates/id_rsa_pub.cfg", {
@@ -30,7 +50,14 @@ locals {
   rendered_key_pair_private = templatefile("templates/id_rsa.cfg", {
     private_key = tls_private_key.backend_key.private_key_pem
   })
+  rendered_ami_id = templatefile("templates/Makefile.cfg", {
+    ami_id   = data.aws_ami.backend.id
+    region   = var.region
+    snapshot = data.aws_ami.backend.root_snapshot_id
+  })
 }
+
+# Create Keys
 
 resource "local_file" "id_rsa_pub" {
   content         = local.rendered_key_pair_pub
@@ -44,6 +71,14 @@ resource "local_file" "id_rsa" {
   file_permission = "0600"
 }
 
+# Create Make Vars
+
+resource "local_file" "make_vars" {
+  content         = local.rendered_ami_id
+  filename        = "../../../packer-demo/Makefile"
+  file_permission = "0640"
+}
+
 # Remote state
 
 data "terraform_remote_state" "networking" {
@@ -54,20 +89,9 @@ data "terraform_remote_state" "networking" {
   }
 }
 
-# Get packer image
-
-data "aws_ami_ids" "backend" {
-  owners = ["self"]
-
-  filter {
-    name   = "name"
-    values = ["My apache*"]
-  }
-}
-
 resource "aws_instance" "ansible_backend" {
   count                  = var.instance_number
-  ami                    = data.aws_ami_ids.backend.ids[0]
+  ami                    = data.aws_ami.backend.id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.allow_backend.id]
   subnet_id              = data.terraform_remote_state.networking.outputs.private_subnet_id[0]

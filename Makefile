@@ -1,4 +1,5 @@
-AMI_ID = `cd ./terraform-demo/efimeros/backend && terraform output ami_backend`
+#INCLUDE MAKEFILES
+include packer-demo/Makefile
 
 #CREATE
 
@@ -44,7 +45,7 @@ update_haproxy:
 
 #DESTROY
 
-destroy_pipeline:  destroy_frontend destroy_backend destroy_ami destroy_networking
+destroy_pipeline: destroy_frontend destroy_backend destroy_ami destroy_networking
 
 destroy_frontend:
 		cd ./terraform-demo/efimeros/frontend; \
@@ -57,7 +58,8 @@ destroy_backend:
 		terraform destroy -auto-approve -var-file="./project.tfvars"
 
 destroy_ami:
-		-aws ec2 deregister-image --region us-east-2 --image-id ${AMI_ID}; \
+		-aws ec2 deregister-image --region ${REGION} --image-id ${AMI_ID} ; \
+		aws ec2 delete-snapshot --region ${REGION} --snapshot-id ${SNAPSHOT}
 
 destroy_networking:
 		cd ./terraform-demo/networking; \
